@@ -10,6 +10,7 @@ import (
 
 // 参考: https://pkg.go.dev/net/http/httptest
 func TestHandler(t *testing.T) {
+	// 测试数据：环境变量VERSION和预设请求头部的header
 	testVersion := "test version: v0.0.1"
 	os.Setenv(VERSION, testVersion)
 
@@ -21,6 +22,7 @@ func TestHandler(t *testing.T) {
 		"Test-Header":     "my test header",
 	}
 
+	// 启动我们的httpserver，并构造get 请求(带上预设的header) 发起请求 /healthz
 	ts := httptest.NewServer(New())
 	defer ts.Close()
 
@@ -37,6 +39,7 @@ func TestHandler(t *testing.T) {
 		t.Fatal(err)
 	}
 
+	// 返回的header数量必须与预设的header一致
 	headers["Version"] = testVersion
 	if len(headers) != len(res.Header) {
 		t.Errorf("httpserver header 错误，响应header数量：%d，期待header数量：%d", len(res.Header), len(headers))
@@ -53,11 +56,13 @@ func TestHandler(t *testing.T) {
 		}
 	}
 
+	// 检查VERSION环境变量
 	version := res.Header.Get("Version")
 	if version != testVersion {
 		t.Errorf("httpserver VERSION 错误，得到VERSION: %s, 期待VERSION: %s", version, testVersion)
 	}
 
+	// 检查/healthz状态码 == 200
 	if res.StatusCode != 200 {
 		t.Errorf("httpserver 响应码 错误，得到响应码: %d, 期待响应码: %d", res.StatusCode, 200)
 	}

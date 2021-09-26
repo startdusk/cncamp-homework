@@ -2,6 +2,10 @@ APP_NAME=httpserver
 
 all: fmt vet test testrace
 
+run: build
+	@chmod -x ./$(APP_NAME)
+	./$(APP_NAME)
+
 build: all
 	@rm -rf $(APP_NAME) &>/dev/null
 	@echo "build app..."
@@ -28,4 +32,5 @@ testrace:
 		vet \
 		test \
 		testrace \
-		build
+		build \
+		run
