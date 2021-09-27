@@ -3,7 +3,7 @@ APP_NAME=httpserver
 all: fmt vet test testrace
 
 run: build
-	@chmod -x ./$(APP_NAME)
+	@chmod +x ./$(APP_NAME)
 	./$(APP_NAME)
 
 build: all
