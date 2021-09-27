@@ -33,12 +33,12 @@ func logMiddleware(next http.Handler) http.Handler {
 
 func headerMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// 1.接收客户端request，并将request中带的header写入responseheader
+		// 1.接收客户端request，并将request中带的header写入response header
 		for key := range r.Header {
 			w.Header().Add(key, r.Header.Get(key))
 		}
 
-		// 2.读取当前系统的环境变量中的VERSION配置，并写入responseheader
+		// 2.读取当前系统的环境变量中的VERSION配置，并写入response header
 		version := os.Getenv("VERSION")
 		w.Header().Add("Version", version)
 
