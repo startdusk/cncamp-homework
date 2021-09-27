@@ -6,11 +6,6 @@ import (
 	"os"
 )
 
-const (
-	// VERSION version 环境变量名
-	VERSION = "VERSION"
-)
-
 // New 构建 http.Handler 的实现
 func New() http.Handler {
 	mux := http.NewServeMux()
@@ -32,7 +27,7 @@ func logMiddleware(next http.Handler) http.Handler {
 		next.ServeHTTP(rw, r)
 
 		// 3.Server端记录访问日志包括客户端IP，HTTP返回码，输出到server端的标准输出
-		log.Printf("请求 IP：%v，HTTP返回码：%v\n", r.RemoteAddr, rw.StatusCode())
+		log.Printf("请求IP：%v，HTTP返回码：%v\n", r.RemoteAddr, rw.StatusCode())
 	})
 }
 
@@ -44,7 +39,7 @@ func headerMiddleware(next http.Handler) http.Handler {
 		}
 
 		// 2.读取当前系统的环境变量中的VERSION配置，并写入responseheader
-		version := os.Getenv(VERSION)
+		version := os.Getenv("VERSION")
 		w.Header().Add("Version", version)
 
 		next.ServeHTTP(w, r)

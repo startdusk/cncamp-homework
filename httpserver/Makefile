@@ -1,10 +1,13 @@
 APP_NAME=httpserver
+ADDR=":8089"
+VERSION="v0.0.2"
 
 all: fmt vet test testrace
 
 run: build
+	@echo "run app..."
 	@chmod +x ./$(APP_NAME)
-	./$(APP_NAME)
+	@./$(APP_NAME) -addr=$(ADDR) -version=$(VERSION)
 
 build: all
 	@rm -rf $(APP_NAME) &>/dev/null

@@ -12,7 +12,7 @@ import (
 func TestHandler(t *testing.T) {
 	// 测试数据：环境变量VERSION和预设请求头部的header
 	testVersion := "test version: v0.0.1"
-	os.Setenv(VERSION, testVersion)
+	os.Setenv("VERSION", testVersion)
 
 	headers := map[string]string{
 		"Accept-Encoding": "gzip",
@@ -31,6 +31,7 @@ func TestHandler(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	// 设置header到请求头
 	for k, v := range headers {
 		req.Header.Set(k, v)
 	}
@@ -39,7 +40,7 @@ func TestHandler(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	// 返回的header数量必须与预设的header一致
+	// 返回的header数量必须与预设的header+VERSION一致
 	headers["Version"] = testVersion
 	if len(headers) != len(res.Header) {
 		t.Errorf("httpserver header 错误，响应header数量：%d，期待header数量：%d", len(res.Header), len(headers))
