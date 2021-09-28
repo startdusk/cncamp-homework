@@ -2,8 +2,10 @@ package handler
 
 import (
 	"log"
+	"net"
 	"net/http"
 	"os"
+	"strings"
 )
 
 // New 构建 http.Handler 的实现
@@ -62,4 +64,3 @@ func ipAddress(r *http.Request) string {
 
 	return ""
 }
-
