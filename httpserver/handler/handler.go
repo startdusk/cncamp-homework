@@ -27,7 +27,7 @@ func logMiddleware(next http.Handler) http.Handler {
 		next.ServeHTTP(rw, r)
 
 		// 3.Server端记录访问日志包括客户端IP，HTTP返回码，输出到server端的标准输出
-		log.Printf("请求IP：%v，HTTP返回码：%v\n", r.RemoteAddr, rw.StatusCode())
+		log.Printf("请求IP：%v，HTTP返回码：%v\n", ipAddress(r), rw.StatusCode())
 	})
 }
 
@@ -45,3 +45,21 @@ func headerMiddleware(next http.Handler) http.Handler {
 		next.ServeHTTP(w, r)
 	})
 }
+
+// ipAddress 获取客户端 IP
+func ipAddress(r *http.Request) string {
+	if ip := strings.TrimSpace(strings.Split(r.Header.Get("X-Forwarded-For"), ",")[0]); ip != "" {
+		return ip
+	}
+
+	if ip := strings.TrimSpace(r.Header.Get("X-Real-Ip")); ip != "" {
+		return ip
+	}
+
+	if ip, _, err := net.SplitHostPort(strings.TrimSpace(r.RemoteAddr)); err == nil {
+		return ip
+	}
+
+	return ""
+}
+
