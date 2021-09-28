@@ -29,11 +29,6 @@ func (r *responseWriter) WriteHeader(statusCode int) {
 	r.w.WriteHeader(statusCode)
 }
 
-// StatusCode 返回http响应码
-func (r *responseWriter) StatusCode() int {
-	return r.statusCode
-}
-
 func wrapperResponseWriter(w http.ResponseWriter) *responseWriter {
 	return &responseWriter{
 		w: w,
