@@ -27,7 +27,7 @@ func logMiddleware(next http.Handler) http.Handler {
 		next.ServeHTTP(rw, r)
 
 		// 3.Server端记录访问日志包括客户端IP，HTTP返回码，输出到server端的标准输出
-		log.Printf("请求IP：%v，HTTP返回码：%v\n", ipAddress(r), rw.StatusCode())
+		log.Printf("请求IP：%v，HTTP返回码：%v\n", ipAddress(r), rw.statusCode)
 	})
 }
 
