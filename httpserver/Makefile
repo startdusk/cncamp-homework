@@ -1,5 +1,5 @@
 APP_NAME=httpserver
-ADDR=":8089"
+ADDR=80
 VERSION="v0.0.1"
 
 all: fmt vet test testrace
@@ -7,7 +7,7 @@ all: fmt vet test testrace
 run: build-app
 	@echo "run app..."
 	@chmod +x ./$(APP_NAME)
-	@./$(APP_NAME) -addr=$(ADDR) -version=$(VERSION)
+	@sudo ./$(APP_NAME) -addr=:$(ADDR) -version=$(VERSION)
 
 build-image: all
 	@echo "build image..."
@@ -15,7 +15,7 @@ build-image: all
 
 run-image: build-image
 	@echo "run image..."
-	@docker run -p 8089:8089 cncamp/$(APP_NAME) -addr=$(ADDR) -version=$(VERSION)
+	@docker run -p $(ADDR):$(ADDR) cncamp/$(APP_NAME) -addr=:$(ADDR) -version=$(VERSION)
 
 build-app: all
 	@rm -rf $(APP_NAME) &>/dev/null

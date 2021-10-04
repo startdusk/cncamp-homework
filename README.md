@@ -4,14 +4,16 @@
 
 ### 目录：/cncamp-homework/httpserver
 
-二进制运行：
+Docker 运行:
+
+```bash
+$ make run-image
+```
+
+二进制运行 (需要管理员权限)：
 
 ```bash
 $ make run
 ```
 
-Docker 运行
-
-```bash
-$ make run-image
-```
+访问 http://localhost/healthz

@@ -16,10 +16,10 @@ FROM alpine:3.13
 
 COPY --from=builder /go/bin/httpserver /bin/httpserver
 
-ENV ADDR=:8089
+ENV ADDR=:80
 
 # 申明暴露端口
-EXPOSE 8089
+EXPOSE 80
 
 # 设置服务入口
 ENTRYPOINT [ "/bin/httpserver" ]

@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-var addr = flag.String("addr", ":8080", "address to listen")
+var addr = flag.String("addr", ":80", "address to listen")
 var version = flag.String("version", "v0.0.1", "version for httpserver")
 
 func main() {
