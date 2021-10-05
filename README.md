@@ -16,4 +16,6 @@ $ make run-image
 $ make run
 ```
 
-访问 http://localhost/healthz
+httpserver 启动后，访问 http://localhost/healthz
+
+当然是看不到什么的，要用单元测试验证代码的正确性，[这里](https://github.com/startdusk/cncamp-homework/blob/master/httpserver/handler/handler_test.go)
