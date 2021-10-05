@@ -57,13 +57,13 @@ func TestHandler(t *testing.T) {
 		}
 	}
 
-	// 检查VERSION环境变量
+	// 检查header中返回的VERSION环境变量
 	version := res.Header.Get("Version")
 	if version != testVersion {
 		t.Errorf("httpserver VERSION 错误，得到VERSION: %s, 期望VERSION: %s", version, testVersion)
 	}
 
-	// 检查/healthz状态码 == 200
+	// 检查访问/healthz返回状态码 == 200
 	if res.StatusCode != 200 {
 		t.Errorf("httpserver 响应码 错误，得到响应码: %d, 期望响应码: %d", res.StatusCode, 200)
 	}
