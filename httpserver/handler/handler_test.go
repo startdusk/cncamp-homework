@@ -43,7 +43,7 @@ func TestHandler(t *testing.T) {
 	// 返回的header数量必须与预设的header+VERSION一致
 	headers["Version"] = testVersion
 	if len(headers) != len(res.Header) {
-		t.Errorf("httpserver header 错误，响应header数量：%d，期待header数量：%d", len(res.Header), len(headers))
+		t.Errorf("httpserver header 错误，响应header数量：%d，期望header数量：%d", len(res.Header), len(headers))
 	}
 
 	for k := range res.Header {
@@ -53,18 +53,18 @@ func TestHandler(t *testing.T) {
 		}
 		actual := res.Header.Get(k)
 		if val != actual {
-			t.Errorf("httpserver header 错误，header：%v，value: %v，期待value：%v", k, actual, val)
+			t.Errorf("httpserver header 错误，header：%v，value: %v，期望value：%v", k, actual, val)
 		}
 	}
 
 	// 检查VERSION环境变量
 	version := res.Header.Get("Version")
 	if version != testVersion {
-		t.Errorf("httpserver VERSION 错误，得到VERSION: %s, 期待VERSION: %s", version, testVersion)
+		t.Errorf("httpserver VERSION 错误，得到VERSION: %s, 期望VERSION: %s", version, testVersion)
 	}
 
 	// 检查/healthz状态码 == 200
 	if res.StatusCode != 200 {
-		t.Errorf("httpserver 响应码 错误，得到响应码: %d, 期待响应码: %d", res.StatusCode, 200)
+		t.Errorf("httpserver 响应码 错误，得到响应码: %d, 期望响应码: %d", res.StatusCode, 200)
 	}
 }
