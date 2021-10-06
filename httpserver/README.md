@@ -8,7 +8,7 @@ Docker 运行:
 $ make run-image
 ```
 
-二进制运行 (需要管理员权限，适用于 Linux，MacOS，Windows10 WSL2 运行)：
+二进制运行 (需要管理员权限，适用于 Linux，MacOS，Windows10 WSL2 上运行)：
 
 ```bash
 $ make run
