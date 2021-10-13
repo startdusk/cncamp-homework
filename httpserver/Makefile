@@ -2,6 +2,8 @@ APP_NAME=httpserver
 ADDR=80
 VERSION="v0.0.1"
 
+TAG="v1.0"
+
 all: fmt vet test testrace
 
 run: build-app
@@ -12,6 +14,11 @@ run: build-app
 build-image: all
 	@echo "build image..."
 	@docker build -t cncamp/$(APP_NAME) -f ./Dockerfile .
+
+upload-image: build-image
+	@echo "upload image $(APP_NAME)..."
+	@docker tag cncamp/$(APP_NAME) cncamp/$(APP_NAME):$(TAG)
+	@docker push cncamp/$(APP_NAME):$(TAG)
 
 run-image: build-image
 	@echo "run image..."
@@ -46,4 +53,5 @@ testrace:
 		build-app \
 		build-image \
 		run-image \
+		upload-image \
 		run
