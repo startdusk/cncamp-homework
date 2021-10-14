@@ -55,7 +55,7 @@ $ make run-image # 我这里主要还是为了检查上传到DockerHub的镜像�
 通过nsenter进入容器内查看IP配置：
 
 ```bash
-nsenter-t <pid> -n ipaddr
+$ nsenter-t <pid> -n ipaddr
 ```
 
 <img src="../assert/in-container.png" alt="" style="zoom:50%;" />
