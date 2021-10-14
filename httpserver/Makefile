@@ -3,6 +3,7 @@ ADDR=80
 VERSION="v0.0.1"
 
 TAG="v1.0"
+DOCKER_ACCOUNT="benjamin5611"
 
 all: fmt vet test testrace
 
@@ -13,16 +14,21 @@ run: build-app
 
 build-image: all
 	@echo "build image..."
-	@docker build -t cncamp/$(APP_NAME) -f ./Dockerfile .
+	@docker build -t $(DOCKER_ACCOUNT)/$(APP_NAME) -f ./Dockerfile .
 
 upload-image: build-image
 	@echo "upload image $(APP_NAME)..."
-	@docker tag cncamp/$(APP_NAME) cncamp/$(APP_NAME):$(TAG)
-	@docker push cncamp/$(APP_NAME):$(TAG)
+	@docker tag $(DOCKER_ACCOUNT)/$(APP_NAME) $(DOCKER_ACCOUNT)/$(APP_NAME):$(TAG)
+	@docker push $(DOCKER_ACCOUNT)/$(APP_NAME):$(TAG)
 
-run-image: build-image
+
+run-image-local: build-image
+	@echo "run image local..."
+	@docker run -p $(ADDR):$(ADDR) $(DOCKER_ACCOUNT)/$(APP_NAME) -addr=:$(ADDR) -version=$(VERSION)
+
+run-image:
 	@echo "run image..."
-	@docker run -p $(ADDR):$(ADDR) cncamp/$(APP_NAME) -addr=:$(ADDR) -version=$(VERSION)
+	@docker run -p $(ADDR):$(ADDR) $(DOCKER_ACCOUNT)/$(APP_NAME):$(TAG) -addr=:$(ADDR) -version=$(VERSION)
 
 build-app: all
 	@rm -rf $(APP_NAME) &>/dev/null
@@ -52,6 +58,7 @@ testrace:
 		testrace \
 		build-app \
 		build-image \
+		run-image-local \
 		run-image \
 		upload-image \
 		run

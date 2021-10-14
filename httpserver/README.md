@@ -11,7 +11,7 @@
 Docker 运行:
 
 ```bash
-$ make run-image
+$ make run-image-local
 ```
 
 二进制运行 (需要管理员权限，适用于 Linux，MacOS，Windows10 WSL2 上运行)：
@@ -26,14 +26,38 @@ httpserver 启动后，访问 http://localhost/healthz
 
 ## 2.作业二
 
-Docker 运行:
+1.Docker Golang 打包最佳实践：[这里](https://github.com/startdusk/cncamp-homework/blob/master/httpserver/Dockerfile)
 
-```bash
-$ make run-image
-```
-
-推送到 DockerHub:
+2.推送到 DockerHub:
 
 ```bash
 $ make upload-image
 ```
+
+推送结果：
+<img src="../assert/dockerpush.png" alt="" style="zoom:50%;" />
+
+3.Docker 本地启动 httpserver:
+
+```bash
+$ make run-image-local
+```
+
+4.通过 nsenter 进入容器查看 IP 配置：
+
+拉取 DockerHub 上的镜像
+
+```bash
+$ make run-image # 我这里主要还是为了检查上传到DockerHub的镜像是否能用，所以在makefile里面拉取了DockerHub上传了的镜像
+```
+
+
+通过nsenter进入容器内查看IP配置：
+
+```bash
+nsenter-t <pid> -n ipaddr
+```
+
+<img src="../assert/in-container.png" alt="" style="zoom:50%;" />
+
+
