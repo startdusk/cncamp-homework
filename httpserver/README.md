@@ -51,13 +51,10 @@ $ make run-image-local
 $ make run-image # 我这里主要还是为了检查上传到DockerHub的镜像是否能用，所以在makefile里面拉取了DockerHub上传了的镜像
 ```
 
-
-通过nsenter进入容器内查看IP配置：
+通过 nsenter 进入容器内查看 IP 配置：
 
 ```bash
-$ nsenter-t <pid> -n ipaddr
+$ nsenter-t <pid> -n ip addr
 ```
 
 <img src="../assert/in-container.png" alt="" style="zoom:50%;" />
-
-
