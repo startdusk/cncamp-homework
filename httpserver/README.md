@@ -41,7 +41,7 @@ $ make upload-image
 ```
 
 推送结果：
-<img src="../assert/dockerpush.png" alt="" style="zoom:50%;" />
+<img src="../assets/dockerpush.png" alt="" style="zoom:50%;" />
 
 4.Docker 本地启动 httpserver:
 
@@ -63,4 +63,4 @@ $ make run-image # 我这里主要还是为了检查上传到DockerHub的镜像�
 $ nsenter-t <pid> -n ip addr
 ```
 
-<img src="../assert/in-container.png" alt="" style="zoom:50%;" />
+<img src="../assets/in-container.png" alt="" style="zoom:50%;" />
