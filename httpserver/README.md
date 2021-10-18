@@ -26,9 +26,15 @@ httpserver 启动后，访问 http://localhost/healthz
 
 ## 2.作业二
 
-1.Docker Golang 打包最佳实践：[这里](https://github.com/startdusk/cncamp-homework/blob/master/httpserver/Dockerfile)
+1.构建本地镜像
 
-2.推送到 DockerHub:
+```bash
+$ make build-image
+```
+
+2.编写 Dockerfile 将编写的 httpserver 容器化，请思考有哪些最佳实践可以引入到 Dockerfile 中来：[这里](https://github.com/startdusk/cncamp-homework/blob/master/httpserver/Dockerfile)
+
+3.推送到 DockerHub:
 
 ```bash
 $ make upload-image
@@ -37,13 +43,13 @@ $ make upload-image
 推送结果：
 <img src="../assert/dockerpush.png" alt="" style="zoom:50%;" />
 
-3.Docker 本地启动 httpserver:
+4.Docker 本地启动 httpserver:
 
 ```bash
 $ make run-image-local
 ```
 
-4.通过 nsenter 进入容器查看 IP 配置：
+5.通过 nsenter 进入容器查看 IP 配置：
 
 拉取 DockerHub 上的镜像
 
