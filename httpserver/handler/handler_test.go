@@ -6,6 +6,8 @@ import (
 	"os"
 	"testing"
 	"time"
+
+	"go.uber.org/zap"
 )
 
 // 参考: https://pkg.go.dev/net/http/httptest
@@ -23,7 +25,12 @@ func TestHandler(t *testing.T) {
 	}
 
 	// 启动我们的httpserver，并构造get 请求(带上预设的header) 发起请求 /healthz
-	ts := httptest.NewServer(New())
+	lg, err := zap.NewProduction()
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer lg.Sync() // flushes buffer, if any
+	ts := httptest.NewServer(New(lg))
 	defer ts.Close()
 
 	url := ts.URL + "/healthz"

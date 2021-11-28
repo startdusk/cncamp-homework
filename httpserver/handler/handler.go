@@ -1,19 +1,20 @@
 package handler
 
 import (
-	"log"
 	"net"
 	"net/http"
 	"os"
 	"strings"
+
+	"go.uber.org/zap"
 )
 
 // New 构建 http.Handler 的实现
-func New() http.Handler {
+func New(lg *zap.Logger) http.Handler {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/healthz", healthz)
 
-	return logMiddleware(headerMiddleware(mux))
+	return logMiddleware(headerMiddleware(mux), lg)
 }
 
 func healthz(w http.ResponseWriter, r *http.Request) {
@@ -22,14 +23,14 @@ func healthz(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-func logMiddleware(next http.Handler) http.Handler {
+func logMiddleware(next http.Handler, lg *zap.Logger) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		rw := wrapperResponseWriter(w)
 
 		next.ServeHTTP(rw, r)
 
 		// 3.Server端记录访问日志包括客户端IP，HTTP返回码，输出到server端的标准输出
-		log.Printf("请求IP：%v，HTTP返回码：%v\n", ipAddress(r), rw.statusCode)
+		lg.Sugar().Infof("请求IP：%v，HTTP返回码：%v\n", ipAddress(r), rw.statusCode)
 	})
 }
 

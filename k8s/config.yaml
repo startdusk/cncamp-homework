@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: httpserver-config
+data:
+  addr: ':8080'
+  version: 'v1.0.0'
+  shotdown_time: 10
+  log_file: /logs/httpserver.log
+  log_level: INFO
