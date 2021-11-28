@@ -3,6 +3,7 @@
 - [httpserver](#httpserver)
   - [1.作业一](#1作业一)
   - [2.作业二](#2作业二)
+  - [3.作业三](#3作业三)
 
 ## 1.作业一
 
@@ -64,3 +65,11 @@ $ nsenter-t <pid> -n ip addr
 ```
 
 <img src="../assets/in-container.png" alt="" style="zoom:50%;" />
+
+## 3.作业三
+
+代码和配置分离，主要利用 k8s 环境变量这一优势，使用第三方[flag](github.com/namsral/flag)取代 go 原生的 flag 优先读取环境变量
+
+```bash
+$ go get github.com/namsral/flag
+```
