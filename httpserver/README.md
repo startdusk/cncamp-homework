@@ -73,3 +73,12 @@ $ nsenter-t <pid> -n ip addr
 ```bash
 $ go get github.com/namsral/flag
 ```
+
+ingress 安装：参考[cncamp](https://github.com/cncamp/101/tree/master/module8/ingress)
+
+注意生成的 tls.crt 和 tls.key 要执行一步生成 base64
+
+```bash
+$ cat tls.crt | base64 -w 0
+$ cat tls.key | base64 -w 0
+```
