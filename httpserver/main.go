@@ -4,6 +4,7 @@ import (
 	"context"
 	"httpserver/handler"
 	"httpserver/logger"
+	"httpserver/metrics"
 	"log"
 	"net/http"
 	"os"
@@ -32,6 +33,10 @@ func main() {
 	}
 	defer lg.Sync()
 	sugar := lg.Sugar()
+
+	if err := metrics.Register(); err != nil {
+		log.Fatalf("prometheus register error: %v", err)
+	}
 
 	h := handler.New(lg)
 	srv := http.Server{

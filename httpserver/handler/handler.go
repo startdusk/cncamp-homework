@@ -1,11 +1,17 @@
 package handler
 
 import (
+	"fmt"
+	"httpserver/metrics"
+	"io"
+	"math/rand"
 	"net"
 	"net/http"
 	"os"
 	"strings"
+	"time"
 
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"go.uber.org/zap"
 )
 
@@ -13,7 +19,9 @@ import (
 func New(lg *zap.Logger) http.Handler {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/healthz", healthz)
-
+	mux.HandleFunc("/hello", helloMetrics)
+	// 添加指标采集
+	mux.Handle("/metrics", promhttp.Handler())
 	return logMiddleware(headerMiddleware(mux), lg)
 }
 
@@ -21,6 +29,28 @@ func healthz(w http.ResponseWriter, r *http.Request) {
 
 	// 4.当访问localhost/healthz时，应返回200
 	w.WriteHeader(http.StatusOK)
+}
+func randInt(min int, max int) int {
+	rand.Seed(time.Now().UTC().UnixNano())
+	return min + rand.Intn(max-min)
+}
+
+func helloMetrics(w http.ResponseWriter, r *http.Request) {
+
+	timer := metrics.NewTimer()
+	defer timer.ObserveTotal()
+	user := r.URL.Query().Get("user")
+	delay := randInt(10, 2000)
+	time.Sleep(time.Millisecond * time.Duration(delay))
+	if user != "" {
+		io.WriteString(w, fmt.Sprintf("hello [%s]\n", user))
+	} else {
+		io.WriteString(w, "hello [stranger]\n")
+	}
+	io.WriteString(w, "===================Details of the http request header:============\n")
+	for k, v := range r.Header {
+		io.WriteString(w, fmt.Sprintf("%s=%s\n", k, v))
+	}
 }
 
 func logMiddleware(next http.Handler, lg *zap.Logger) http.Handler {
